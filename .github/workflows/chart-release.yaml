@@ -17,14 +17,6 @@ jobs:
           path: 'charts'
       - name: Show repo output
         run: ls -lah
-      - name: Configure Git
-        run: |
-          git init
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.0.0-rc.1
-        with:
-          charts_repo_url: http://openstack-charts.realworld.net.au
-        env:
-          CR_TOKEN: "${{ secrets.CR_TOKEN }}"
+      - name: Execute Chart Releaser
+        using: 'docker'
+        image: 'helmpack/chart-releaser:latest'
