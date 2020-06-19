@@ -1,0 +1,23 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Openstack-Helm @ Master
+        uses: actions/checkout@v2
+        with:
+          repository: 'openstack/openstack-helm'
+          ref: 'master'
+          path: 'openstack-helm'
+      - name: Checkout Openstack-Helm-Infra @ Master
+        uses: actions/checkout@v2
+        with:
+          repository: 'openstack/openstack-helm-infra'
+          ref: 'master'
+          path: 'openstack-infra'
