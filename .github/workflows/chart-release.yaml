@@ -14,6 +14,8 @@ jobs:
         with:
           repository: 'openstack/openstack-helm'
           ref: 'master'
+      - name: Show repo output
+        run: ls -lah
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
