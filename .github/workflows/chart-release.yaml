@@ -14,7 +14,6 @@ jobs:
         with:
           repository: 'openstack/openstack-helm'
           ref: 'master'
-          path: 'openstack-helm'
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
@@ -22,6 +21,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.0.0-rc.1
         with:
-          charts_dir: 'openstack-helm'
+          charts_repo_url: http://openstack-charts.realworld.net.au
         env:
           CR_TOKEN: "${{ secrets.CR_TOKEN }}"
