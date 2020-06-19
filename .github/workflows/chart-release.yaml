@@ -18,4 +18,4 @@ jobs:
       - name: Show repo output
         run: ls -lah
       - name: Execute Chart Releaser
-        uses: 'docker://helmpack/chart-releaser:latest'
+        uses: 'docker://quay.io/helmpack/chart-releaser:latest'
