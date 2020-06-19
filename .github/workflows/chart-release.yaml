@@ -22,5 +22,6 @@ jobs:
         uses: helm/chart-releaser-action@v1.0.0-rc.1
         with:
           charts_repo_url: http://openstack-charts.realworld.net.au
+          charts_dir: .
         env:
           CR_TOKEN: "${{ secrets.CR_TOKEN }}"
