@@ -14,13 +14,6 @@ jobs:
         with:
           repository: 'openstack/openstack-helm'
           ref: 'master'
-          path: 'openstack-helm'
-      - name: Checkout Openstack-Helm-Infra @ Master
-        uses: actions/checkout@v2
-        with:
-          repository: 'openstack/openstack-helm-infra'
-          ref: 'master'
-          path: 'openstack-infra'
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
