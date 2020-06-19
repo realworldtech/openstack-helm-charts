@@ -18,5 +18,4 @@ jobs:
       - name: Show repo output
         run: ls -lah
       - name: Execute Chart Releaser
-        using: 'docker'
-        image: 'helmpack/chart-releaser:latest'
+        uses: 'docker://helmpack/chart-releaser:latest'
