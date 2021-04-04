@@ -29,5 +29,19 @@ jobs:
         run: ls -lah
       - name: Remove prometheus-kube-state-metrics as it is invalid
         run: rm -rf openstack-helm-infra/prometheus-kube-state-metrics
-      - name: Package each of the repos charts
+      - name: Package each of the Openstack-Helm-Infra charts
         run: cd openstack-helm-infra && make package all
+      - name: Checkout Openstack-Helm @ Specific Version
+        uses: actions/checkout@v2
+        with:
+          repository: 'openstack/openstack-helm'
+          ref: 'afd68753c720094e61fee24f001a2d826f1929ae'
+          path: 'openstack-helm-infra'
+      - name: Remove openstack-helm-infra git references
+        run: rm -rf openstack-helm/.git
+      - name: Replace all instances of "http://localhost:8879/charts" with "file://../../openstack-helm-infra/helm-toolkit/"
+        run: find ./openstack-helm -type f -name 'requirements.yaml' -exec sed -i 's/http\:\/\/localhost\:8879\/charts/file\:\/\/\.\.\/\.\.\/openstack-helm-infra\/helm-toolkit\//g' {} \;
+      - name: Show repo output
+        run: ls -lah openstack-helm
+      - name: Package each of the Openstack-Helm charts
+        run: cd openstack-helm && make package all
