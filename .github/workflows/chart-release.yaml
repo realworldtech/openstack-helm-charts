@@ -28,5 +28,4 @@ jobs:
       - name: Show repo output
         run: ls -lah
       - name: Package each of the repos charts
-      - name: Make all charts
         run: cd charts && make package all
