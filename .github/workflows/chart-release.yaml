@@ -28,4 +28,4 @@ jobs:
       - name: Show repo output
         run: ls -lah
       - name: Package each of the repos charts
-        run: cd charts && make package all
+        run: cd openstack-helm-infra && make package all
