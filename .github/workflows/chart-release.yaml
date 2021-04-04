@@ -1,4 +1,4 @@
-name: Release Charts
+name: Compile and Distribute Helm Charts
 
 on:
   push:
@@ -15,17 +15,18 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Checkout Openstack-Helm @ Specific Version
+      - name: Checkout Openstack-Helm-Infra @ Specific Version
         uses: actions/checkout@v2
         with:
-          repository: 'openstack/openstack-helm'
-          ref: 'afd68753c720094e61fee24f001a2d826f1929ae'
-          path: 'charts'
-      - name: Remove openstack-helm git references
-        run: rm -rf charts/.git
+          repository: 'openstack/openstack-helm-infra'
+          ref: '5376e3a8ab6513989ecab0344a603a8a1aa4470b'
+          path: 'openstack-helm-infra'
+      - name: Remove openstack-helm-infra git references
+        run: rm -rf openstack-helm-infra/.git
+      - name: Replace all instances of "http://localhost:8879/charts" with "file://../helm-toolkit/"
+        run: find . -type f -name 'requirements.yaml' -exec sed -i 's/http\:\/\/localhost\:8879\/charts/file\:\/\/\.\.\/helm-toolkit\//g' {} \;
       - name: Show repo output
         run: ls -lah
-      - name: Launch Local Helm Server 
-        run: helm serve --repo-path ./charts
+      - name: Package each of the repos charts
       - name: Make all charts
-        run: cd charts && make all
+        run: cd charts && make package all
