@@ -25,5 +25,7 @@ jobs:
         run: rm -rf charts/.git
       - name: Show repo output
         run: ls -lah
+      - name: Launch Local Helm Server 
+        run: helm serve --repo-path ./charts
       - name: Make all charts
         run: cd charts && make all
