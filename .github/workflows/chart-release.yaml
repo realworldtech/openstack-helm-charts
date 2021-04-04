@@ -15,17 +15,15 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Checkout Openstack-Helm @ Master
+      - name: Checkout Openstack-Helm @ Specific Version
         uses: actions/checkout@v2
         with:
           repository: 'openstack/openstack-helm'
-          ref: 'master'
+          ref: 'afd68753c720094e61fee24f001a2d826f1929ae'
           path: 'charts'
       - name: Remove openstack-helm git references
         run: rm -rf charts/.git
       - name: Show repo output
         run: ls -lah
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@master
-        env:
-          CR_TOKEN: '${{ secrets.CR_TOKEN }}'
+      - name: Make all charts
+        run: cd charts && make all
