@@ -1,6 +1,8 @@
 name: Compile and Distribute Helm Charts
 
 on:
+  schedule:
+    - cron: * 4 * * *
   push:
     branches:
       - master
@@ -61,3 +63,8 @@ jobs:
         run: ls -lah openstack-helm
       - name: Package each of the Openstack-Helm charts
         run: cd openstack-helm && make package all
+      - name: Push each of the Openstack-Helm charts to Registry
+        run: find openstack-helm -type f -name '*.tgz' -exec helm push --force {} https://registry.thecore.net.au/chartrepo/openstack \;
+        env:
+          HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
+          HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
