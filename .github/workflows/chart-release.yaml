@@ -30,7 +30,7 @@ jobs:
       - name: Remove prometheus-kube-state-metrics as it is invalid
         run: rm -rf openstack-helm-infra/prometheus-kube-state-metrics
       - name: Push helm-toolkit chart first
-        run: cd openstack-helm-infra && make package helm-toolkit
+        run: cd openstack-helm-infra && make package helm-toolkit && helm push --username=${{ secrets.HARBOR_ROBOT }} --password=${{ secrets.HARBOR_ROBOT_TOKEN }} *.tgz https://registry.thecore.net.au/chartrepo/openstack
       ###
       # Push Helm-Toolkit the registry first
       ###
