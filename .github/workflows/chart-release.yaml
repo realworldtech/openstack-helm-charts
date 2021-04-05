@@ -37,10 +37,10 @@ jobs:
       - name: Push Openstack-Helm-Infra charts to registry
         uses: goodsmileduck/helm-push-action@v2
         env:
-          SOURCE_DIR: 'openstack-helm-infra'
-          CHART_FOLDER: 'openstack'
+          SOURCE_DIR: '.'
+          CHART_FOLDER: 'openstack-helm-infra'
           FORCE: 'True'
-          CHARTMUSEUM_URL: 'https://registry.thecore.net.au/chartrepo'
+          CHARTMUSEUM_URL: 'https://registry.thecore.net.au/chartrepo/openstack'
           CHARTMUSEUM_USER: ${{ secrets.HARBOR_ROBOT }}
           CHARTMUSEUM_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
       - name: Package each of the Openstack-Helm-Infra charts
