@@ -37,10 +37,13 @@ jobs:
           HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
           HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
       - name: Package each of the Openstack-Helm-Infra charts
-        run: cd openstack-helm-infra && make package all && helm push --force *.tgz https://registry.thecore.net.au/chartrepo/openstack
+        run: cd openstack-helm-infra && make package all
+      - name: Push each of the Openstack-Helm-Infra charts to Registry
+        run: find openstack-helm-infra -type f -name '*.tgz' -exec helm push --force {} https://registry.thecore.net.au/chartrepo/openstack \;
         env:
           HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
           HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
+
       ###
       # Openstack-Helm-Charts
       ###
