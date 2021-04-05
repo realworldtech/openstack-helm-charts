@@ -34,7 +34,7 @@ jobs:
       - name: Install Helm Push Plugin
         run: helm plugin install https://github.com/chartmuseum/helm-push.git
       - name: Push helm-toolkit chart first
-        run: cd openstack-helm-infra && make package helm-toolkit && helm push --force *.tgz https://registry.thecore.net.au/chartrepo/openstack
+        run: cd openstack-helm-infra && make package helm-toolkit && helm push *.tgz https://registry.thecore.net.au/chartrepo/openstack
         env:
           HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
           HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
