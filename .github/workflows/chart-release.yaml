@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'openstack/openstack-helm-infra'
-          ref: '67d9ece693e9e9ec34b56cd103a38c8818b912d9'
+          ref: '4977aaa48d827ff596307b7cfb04fdd9fea55481'
           path: 'openstack-helm-infra'
       - name: Remove openstack-helm-infra git references
         run: rm -rf openstack-helm-infra/.git
