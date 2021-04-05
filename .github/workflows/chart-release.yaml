@@ -41,7 +41,7 @@ jobs:
       - name: Package each of the Openstack-Helm-Infra charts
         run: cd openstack-helm-infra && make package all
       - name: Push each of the Openstack-Helm-Infra charts to Registry
-        run: find openstack-helm-infra -type f -name '*.tgz' -exec helm push --force {} https://registry.thecore.net.au/chartrepo/openstack \;
+        run: find openstack-helm-infra -type f -name '*.tgz' -exec helm push {} https://registry.thecore.net.au/chartrepo/openstack \;
         env:
           HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
           HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'openstack/openstack-helm'
-          ref: 'afd68753c720094e61fee24f001a2d826f1929ae'
+          ref: '44882d60e2f19e7dee98e2d5cf64a1bacbd7c128'
           path: 'openstack-helm'
       - name: Remove openstack-helm git references
         run: rm -rf openstack-helm/.git
@@ -64,7 +64,7 @@ jobs:
       - name: Package each of the Openstack-Helm charts
         run: cd openstack-helm && make package all
       - name: Push each of the Openstack-Helm charts to Registry
-        run: find openstack-helm -type f -name '*.tgz' -exec helm push --force {} https://registry.thecore.net.au/chartrepo/openstack \;
+        run: find openstack-helm -type f -name '*.tgz' -exec helm push {} https://registry.thecore.net.au/chartrepo/openstack \;
         env:
           HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
           HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
