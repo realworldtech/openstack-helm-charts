@@ -32,24 +32,14 @@ jobs:
       - name: Install Helm Push Plugin
         run: helm plugin install https://github.com/chartmuseum/helm-push.git
       - name: Push helm-toolkit chart first
-        run: cd openstack-helm-infra && make package helm-toolkit && helm push *.tgz https://registry.thecore.net.au/chartrepo/openstack
+        run: cd openstack-helm-infra && make package helm-toolkit && helm push --force *.tgz https://registry.thecore.net.au/chartrepo/openstack
         env:
           HELM_REPO_USERNAME: ${{ secrets.HARBOR_ROBOT }}
           HELM_REPO_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
-      ###
-      # Push Helm-Toolkit the registry first
-      ###
-      - name: Push Openstack-Helm-Infra charts to registry
-        uses: goodsmileduck/helm-push-action@v2
-        env:
-          SOURCE_DIR: '.'
-          CHART_FOLDER: 'openstack-helm-infra'
-          FORCE: 'True'
-          CHARTMUSEUM_URL: 'https://registry.thecore.net.au/chartrepo/openstack'
-          CHARTMUSEUM_USER: ${{ secrets.HARBOR_ROBOT }}
-          CHARTMUSEUM_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
       - name: Package each of the Openstack-Helm-Infra charts
         run: cd openstack-helm-infra && make package all
+      - name: Push Openstack-Helm-Infra Charts to Registry
+        run: cd openstack-helm-infra && make package helm-toolkit && helm push --force *.tgz https://registry.thecore.net.au/chartrepo/openstack
       - name: Checkout Openstack-Helm @ Specific Version
         uses: actions/checkout@v2
         with:
@@ -58,8 +48,8 @@ jobs:
           path: 'openstack-helm'
       - name: Remove openstack-helm git references
         run: rm -rf openstack-helm/.git
-      - name: Replace all instances of "http://localhost:8879/charts" with "file://../../openstack-helm-infra/helm-toolkit/"
-        run: find ./openstack-helm -type f -name 'requirements.yaml' -exec sed -i 's/http\:\/\/localhost\:8879\/charts/file\:\/\/\.\.\/\.\.\/openstack-helm-infra\/helm-toolkit\//g' {} \;
+      - name: Replace all instances of "http://localhost:8879/charts" with "https://registry.thecore.net.au/chartrepo/openstack"
+        run: find . -type f -name 'requirements.yaml' -exec sed -i 's/http\:\/\/localhost\:8879\/charts/https\:\/\/registry\.thecore\.net\.au\/chartrepo\/openstack/g' {} \;
       - name: Show repo output
         run: ls -lah openstack-helm
       - name: Package each of the Openstack-Helm charts
