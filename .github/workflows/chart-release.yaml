@@ -29,12 +29,10 @@ jobs:
         run: ls -lah
       - name: Remove prometheus-kube-state-metrics as it is invalid
         run: rm -rf openstack-helm-infra/prometheus-kube-state-metrics
-        #- name: Push helm-toolkit chart first
-        #run: cd openstack-helm-infra && make package helm-toolkit
-      - name: Package each of the Openstack-Helm-Infra charts
-        run: cd openstack-helm-infra && make package all
+      - name: Push helm-toolkit chart first
+        run: cd openstack-helm-infra && make package helm-toolkit
       ###
-      # Push all the artifacts
+      # Push Helm-Toolkit the registry first
       ###
       - name: Push Openstack-Helm-Infra charts to registry
         uses: goodsmileduck/helm-push-action@v2
@@ -45,6 +43,8 @@ jobs:
           CHARTMUSEUM_URL: 'https://registry.thecore.net.au/chartrepo'
           CHARTMUSEUM_USER: ${{ secrets.HARBOR_ROBOT }}
           CHARTMUSEUM_PASSWORD: ${{ secrets.HARBOR_ROBOT_TOKEN }}
+      - name: Package each of the Openstack-Helm-Infra charts
+        run: cd openstack-helm-infra && make package all
       - name: Checkout Openstack-Helm @ Specific Version
         uses: actions/checkout@v2
         with:
