@@ -2,7 +2,7 @@ name: Compile and Distribute Helm Charts
 
 on:
   schedule:
-    - cron: * 4 * * *
+    - cron: '* 4 * * *'
   push:
     branches:
       - master
