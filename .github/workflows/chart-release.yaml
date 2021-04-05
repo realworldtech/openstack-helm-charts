@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'openstack/openstack-helm'
-          ref: '3abcefea391accfa8044cda870a48c99f3d6ded9'
+          ref: '34c3cd4adf8bdfcc7f960620f667e1f43f4bb9b2'
           path: 'openstack-helm'
       - name: Remove openstack-helm git references
         run: rm -rf openstack-helm/.git
